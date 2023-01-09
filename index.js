@@ -12,8 +12,7 @@
 
  var time = document.getElementById("time"); 
  var seconds = 0;
-var minutes = 0; 
-var hours = 0;
+
 var seconds2 = 0; 
 var avg = document.getElementById("avg");
  
@@ -34,28 +33,41 @@ var avg = document.getElementById("avg");
     currentInp.value = parseInt(curVal) + 1;
 
     list.push(seconds2);
-    avg.innerText = list.reduce(
+
+   var Secetc =  list.reduce(
         (accumulator, currentValue) => accumulator + currentValue,
         0
       )*(totalInp.value-currentInp.value)/(list.length);
 
+      var seconds = Secetc % 60; 
+      var minutes = Math.floor(Secetc/60)
+      avg.innerHTML = ("00" + ":" + minutes.toString() + ":" + seconds.toString())
 
+    
 })
+
+
+function template(seconds){
+
+    var minutes = 0; 
+var hours = 0;
+    if(seconds==60){
+        minutes=minutes+1;
+        seconds=0;
+    }
+    if(minutes==60){
+        hours=hours+1;
+        minutes=0;
+
+    }
+    const time =  (hours.toString() + ":" + minutes.toString() + ":" + seconds.toString())
+    return(time)
+}
     startBtn.addEventListener("click", ()=>{
         setInterval(()=>{
             seconds = seconds + 1;
             seconds2++;
-            if(seconds==60){
-                minutes=minutes+1;
-                seconds=0;
-            }
-            if(minutes==60){
-                hours=hours+1;
-                minutes=0;
-        
-            }
-            
-            time.innerHTML = (hours.toString() + ":" + minutes.toString() + ":" + seconds.toString());
+            time.innerHTML = template(seconds);
             
 
         },1000)
